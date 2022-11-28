@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IBasket } from './IBasket';
-import { IBasketParams } from './IBasketPArams';
 import { Product } from '../Product/Product.js';
 import { discountValidator } from '../generalValidators/discountValidator.js';
 import { getDiscontedFormatedPrc } from '../utils/getDiscontedFormatedPrc.js';
@@ -11,7 +10,7 @@ export class Basket implements IBasket {
   readonly discount: number = 1;
   private list: Product[] = [];
 
-  constructor(configObj?: IBasketParams) {
+  constructor(configObj?: {discount: number}) {
     const discount = configObj?.discount || 0;
     discountValidator(discount);
     this.uuid = uuidv4();
