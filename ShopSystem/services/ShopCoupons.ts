@@ -1,8 +1,8 @@
-import { IshopCoupons } from './IshopCoupons';
+import { IshopSystemCoupons } from './IshopSystemCoupons';
 import { Coupon } from '../../Coupon/Coupon';
 import { couponsListValidator } from '../shopValidators/couponsListValidator.js';
 
-export class ShopCoupons implements IshopCoupons {
+export class ShopCoupons implements IshopSystemCoupons {
   private usedCoupons: Coupon[] = [];
   private unusedCoupons: Coupon[] = [];
 

@@ -1,13 +1,13 @@
 import { v4 as uuid4 } from 'uuid';
-import { IShopSystem } from './IShopSystem';
-import { IshopProductItem } from './IshopProductItem';
+import { IshopSystemOffer } from './services/IshopSystemOffer';
+import { IshopSystemCoupons } from './services/IshopSystemCoupons';
 import { Basket } from '../Basket/Basket.js';
 import { Product } from '../Product/Product.js';
 import { Coupon } from '../Coupon/Coupon.js';
 import { ShopOffer } from './services/shopOffer';
 import { ShopCoupons } from './services/ShopCoupons';
 
-export class ShopSystem implements IShopSystem {
+export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons {
   readonly uuid: string;
   private shopOffer: ShopOffer;
   private shopCoupons: ShopCoupons;
@@ -23,30 +23,25 @@ export class ShopSystem implements IShopSystem {
   }
 
   get closedBaskets() {
-    return this.shopOffer.closedBaskets;
+    return [...this.shopOffer.closedBaskets];
   }
 
   get showShopCoupons() {
-    return this.shopCoupons.shopCoupons;
+    return [...this.shopCoupons.shopCoupons];
   }
 
-  
-  addShopProducts(productsItemsList: IshopProductItem[]) {
-    this.shopOffer.addShopProducts(productsItemsList);
+  addOrUpdateShopProduct(product: Product, qty: number) {
+    this.shopOffer.addOrUpdateShopProduct(product, qty);
   }
+  // gdy miałem tu implementację podawania w argumentach obiektów to mogłem podawać całą tablicę obiekt-produkt + qty. ... ?
 
-  removeShopProducts(productsList: Product[]) {
-    this.shopOffer.removeShopProducts(productsList);
-  }
-
-  updateShopProductQty(productItem: IshopProductItem) {
-    this.shopOffer.updateShopProductQty(productItem);
+  removeShopProduct(product: Product) {
+    this.shopOffer.removeShopProduct(product);
   }
 
   checkout(basket: Basket) {
     this.shopOffer.checkout(basket);
   }
-
 
   addShopCoupon(couponList: Coupon[]) {
     this.shopCoupons.addShopCoupon(couponList);

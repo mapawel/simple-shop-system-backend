@@ -47,14 +47,13 @@ b1.addProduct(p2);
 b1.addProduct(p2);
 b1.removeProduct(p1);
 
-console.log('>>>>>>>>>>>>>', b1.getFinalBasketValue());
 // INITIALIZE SHOP INSTANCE WITH NECESSARY SERVICES
 const shopOffer = new ShopOffer();
 const shopCoupons = new ShopCoupons();
 const shop = new ShopSystem(shopOffer, shopCoupons);
 
 // ADD PRODUCTS TO STOCK TO SHOP INSTANCE AND STOCK MANIPULATION
-shop.addShopProducts([
+[
   {
     product: p1,
     qty: 11,
@@ -75,21 +74,14 @@ shop.addShopProducts([
     product: p5,
     qty: 55,
   },
-]);
+].forEach(({ product, qty }) => shop.addOrUpdateShopProduct(product, qty));
 
-shop.removeShopProducts([p5, p1]);
+shop.removeShopProduct(p5);
+shop.removeShopProduct(p1);
 
-shop.addShopProducts([
-  {
-    product: p1,
-    qty: 1,
-  },
-]);
+shop.addOrUpdateShopProduct(p1, 1);
+shop.addOrUpdateShopProduct(p3, 333);
 
-shop.updateShopProductQty({
-  product: p3,
-  qty: 333,
-});
 
 // CHECK SHOP PRODUCTS STATUS AFTER MANIPULATION
 console.log('SHOP PRODUCTS ----> ', shop.shopProducts);

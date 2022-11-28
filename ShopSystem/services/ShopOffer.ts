@@ -1,15 +1,11 @@
-import { IshopProductItem } from '../IshopProductItem';
 import { Product } from '../../Product/Product';
-import { productItemsListValidator } from '../shopValidators/productItemsListValidator.js';
-import { productItemValidator } from '../shopValidators/productItemValidator.js';
-import { IshopOffer } from './IshopOffer';
-import { shopProdVsBasketValidator } from '../shopValidators/shopProdVsBasketValidator.js';
-import { IshopBasketItem } from '../IshopBasketItem';
+import { IshopSystemOffer } from './IshopSystemOffer';
 import { Basket } from '../../Basket/Basket.js';
+import { qtyValidator } from '../../generalValidators/qtyValidator';
 
-export class ShopOffer implements IshopOffer {
-  private productList: IshopProductItem[] = [];
-  private closedBasketList: IshopBasketItem[] = [];
+export class ShopOffer implements IshopSystemOffer {
+  private productList: Map<Product, number> = new Map();
+  private closedBasketList: Map<Basket, Date> = new Map();
 
   get shopProducts() {
     return this.productList;
@@ -19,47 +15,22 @@ export class ShopOffer implements IshopOffer {
     return this.closedBasketList;
   }
 
-  addShopProducts(productsItemsList: IshopProductItem[]): void {
-    productItemsListValidator(this.productList, productsItemsList);
-    this.productList = [...this.productList, ...productsItemsList];
+  addOrUpdateShopProduct(product: Product, qty: number): void {
+    qtyValidator(qty);
+    this.productList.set(product, qty);
   }
 
-  removeShopProducts(productsList: Product[]): void {
-    this.productList = this.productList.filter(
-      (shopProduct: IshopProductItem) =>
-        !productsList.includes(shopProduct.product)
-    );
-  }
-
-  updateShopProductQty(productItem: IshopProductItem): void {
-    productItemValidator(productItem);
-    const productItemIndex = this.productList.findIndex(
-      (shopProdItem: IshopProductItem) =>
-        shopProdItem.product === productItem.product
-    );
-    if (productItemIndex >= 0) {
-      this.productList[productItemIndex].qty = productItem.qty;
-    }
+  removeShopProduct(product: Product): void {
+    this.productList.delete(product);
   }
 
   checkout(basket: Basket): void {
     basket.basketList.forEach((basketProduct: Product) => {
-      const shopProdToUpdate = this.shopProducts.find(
-        (shopProduct: IshopProductItem) => shopProduct.product === basketProduct
-      );
-      shopProdVsBasketValidator(shopProdToUpdate);
-
-      if (shopProdToUpdate) {
-        this.updateShopProductQty({
-          product: shopProdToUpdate.product,
-          qty: shopProdToUpdate.qty - 1,
-        });
-      }
+      const currentShopQty = this.productList.get(basketProduct);
+      if (currentShopQty)
+        this.addOrUpdateShopProduct(basketProduct, currentShopQty - 1);
     });
-    this.closedBasketList = [
-      ...this.closedBasketList,
-      { basket, purchaseDate: new Date() },
-    ];
+    this.closedBasketList.set(basket, new Date());
   }
 }
 
