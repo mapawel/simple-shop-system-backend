@@ -1,0 +1,1 @@
+{"version":3,"file":"discountValidator.js","sourceRoot":"","sources":["../../generalValidators/discountValidator.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,iBAAiB,GAAG,CAAC,QAAgB,EAAgB,EAAE;IAClE,IAAI,QAAQ,GAAG,CAAC;QAAE,MAAM,IAAI,KAAK,CAAC,uCAAuC,CAAC,CAAC;IAC3E,IAAI,QAAQ,GAAG,CAAC;QACd,MAAM,IAAI,KAAK,CACb,+EAA+E,CAChF,CAAC;IACJ,OAAO;AACT,CAAC,CAAC"}

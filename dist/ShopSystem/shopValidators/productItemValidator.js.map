@@ -1,0 +1,1 @@
+{"version":3,"file":"productItemValidator.js","sourceRoot":"","sources":["../../../ShopSystem/shopValidators/productItemValidator.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,oBAAoB,GAAG,CAAC,WAA6B,EAAE,EAAE;IACpE,IAAI,WAAW,CAAC,GAAG,GAAG,CAAC;QACrB,MAAM,IAAI,KAAK,CAAC,uDAAuD,CAAC,CAAC;IAC3E,OAAO;AACT,CAAC,CAAC"}

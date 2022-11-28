@@ -1,0 +1,1 @@
+{"version":3,"file":"priceValidator.js","sourceRoot":"","sources":["../../generalValidators/priceValidator.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,cAAc,GAAG,CAAC,KAAa,EAAgB,EAAE;IAC5D,IAAI,KAAK,IAAI,CAAC;QAAE,MAAM,IAAI,KAAK,CAAC,oCAAoC,CAAC,CAAC;IACtE,OAAO;AACT,CAAC,CAAC"}
