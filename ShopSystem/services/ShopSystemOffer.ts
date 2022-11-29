@@ -3,16 +3,25 @@ import { IshopSystemOffer } from './IshopSystemOffer';
 import { Basket } from '../../Basket/Basket.js';
 import { qtyValidator } from '../../generalValidators/qtyValidator';
 
-export class ShopOffer implements IshopSystemOffer {
+export class ShopSystemOffer implements IshopSystemOffer {
   private productList: Map<Product, number> = new Map();
   private closedBasketList: Map<Basket, Date> = new Map();
 
   get shopProducts() {
-    return this.productList;
+    return [...this.productList];
   }
 
   get closedBaskets() {
-    return this.closedBasketList;
+    return [...this.closedBasketList];
+  }
+
+  validateStock(map: Map<Product, number>) {
+    for (let [product, qty] of map) {
+      if ((this.productList.get(product) || 0) < qty)
+        throw new Error(
+          `Stock on shop for product: ${product.name} is not sufficient to proceed checkout.`
+        );
+    }
   }
 
   addOrUpdateShopProduct(product: Product, qty: number): void {
@@ -25,11 +34,13 @@ export class ShopOffer implements IshopSystemOffer {
   }
 
   checkout(basket: Basket): void {
-    basket.basketList.forEach((basketProduct: Product) => {
-      const currentShopQty = this.productList.get(basketProduct);
-      if (currentShopQty)
-        this.addOrUpdateShopProduct(basketProduct, currentShopQty - 1);
-    });
+    this.validateStock(basket.basketList);
+
+    for (let [product, qty] of basket.basketList.entries()) {
+      const currentShopQty = this.productList.get(product) || 0;
+      this.addOrUpdateShopProduct(product, currentShopQty - qty);
+    }
+
     this.closedBasketList.set(basket, new Date());
   }
 }

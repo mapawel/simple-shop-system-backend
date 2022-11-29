@@ -1,4 +1,9 @@
 import { Product } from '../Product/Product';
 
-export const getBasketProductsSum = (list: Product[]) =>
-  list.reduce((acc, x) => acc + x.getFinalPrice(), 0);
+export const getBasketProductsSum = (list: Map<Product, number>) => {
+  let sum: number = 0;
+  for (let [product, qty] of list.entries()) {
+    sum += product.getFinalPrice() * qty;
+  }
+  return sum;
+};

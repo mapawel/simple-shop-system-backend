@@ -3,8 +3,8 @@ import { Basket } from './Basket/Basket.js';
 import { productCategories } from './Product/productCategoriesEnum.js';
 import { Coupon } from './Coupon/Coupon.js';
 import { ShopSystem } from './ShopSystem/ShopSystem.js';
-import { ShopOffer } from './ShopSystem/services/shopOffer.js';
-import { ShopCoupons } from './ShopSystem/services/ShopCoupons.js';
+import { ShopSystemOffer } from './ShopSystem/services/ShopSystemOffer.js';
+import { ShopSystemCoupons } from './ShopSystem/services/ShopSystemCoupons.js';
 
 // CREATE EXAMPLE PRODUCTS INSTANCES
 const p1 = new Product({
@@ -42,15 +42,20 @@ const p5 = new Product({
 // ADD SOME PRODUCTS TO BASKET
 const b1 = new Basket({ discount: 0.5 });
 b1.addProduct(p1);
-b1.addProduct(p1);
+// b1.addProduct(p1);
+// b1.addProduct(p1);
 b1.addProduct(p2);
 b1.addProduct(p2);
-b1.removeProduct(p1);
-
+b1.addProduct(p2);
+// b1.removeProduct(p2);
+// b1.removeProduct(p3);
+console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
+// console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.getFinalBasketValue());
+// b1.removeAllProducts();
 // INITIALIZE SHOP INSTANCE WITH NECESSARY SERVICES
-const shopOffer = new ShopOffer();
-const shopCoupons = new ShopCoupons();
-const shop = new ShopSystem(shopOffer, shopCoupons);
+const shopSystemOffer = new ShopSystemOffer();
+const shopSystemCoupons = new ShopSystemCoupons();
+const shop = new ShopSystem(shopSystemOffer, shopSystemCoupons);
 
 // ADD PRODUCTS TO STOCK TO SHOP INSTANCE AND STOCK MANIPULATION
 [
@@ -82,7 +87,6 @@ shop.removeShopProduct(p1);
 shop.addOrUpdateShopProduct(p1, 1);
 shop.addOrUpdateShopProduct(p3, 333);
 
-
 // CHECK SHOP PRODUCTS STATUS AFTER MANIPULATION
 console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
 
@@ -91,12 +95,12 @@ const c1 = new Coupon('QWER');
 const c2 = new Coupon('ASDF');
 const c3 = new Coupon('ZXCV');
 
-// ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
-shop.addShopCoupon([c1, c2]);
-shop.addShopCoupon([c3]);
-shop.removeShopCoupons([c2]);
+// // ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
+// shop.addShopCoupon([c1, c2]);
+// shop.addShopCoupon([c3]);
+// shop.removeShopCoupons([c2]);
 
-console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
+// console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
 
 // CHECKOUT WITH BASKET EARLIER CREATED
 shop.checkout(b1);

@@ -4,15 +4,15 @@ import { IshopSystemCoupons } from './services/IshopSystemCoupons';
 import { Basket } from '../Basket/Basket.js';
 import { Product } from '../Product/Product.js';
 import { Coupon } from '../Coupon/Coupon.js';
-import { ShopOffer } from './services/shopOffer';
-import { ShopCoupons } from './services/ShopCoupons';
+import { ShopSystemOffer } from './services/ShopSystemOffer';
+import { ShopSystemCoupons } from './services/ShopSystemCoupons';
 
 export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons {
   readonly uuid: string;
-  private shopOffer: ShopOffer;
-  private shopCoupons: ShopCoupons;
+  private shopOffer: ShopSystemOffer;
+  private shopCoupons: ShopSystemCoupons;
 
-  constructor(shopOffer: ShopOffer, shopCoupons: ShopCoupons) {
+  constructor(shopOffer: ShopSystemOffer, shopCoupons: ShopSystemCoupons) {
     this.uuid = uuid4();
     this.shopOffer = shopOffer;
     this.shopCoupons = shopCoupons;

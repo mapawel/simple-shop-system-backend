@@ -8,9 +8,9 @@ import { getBasketProductsSum } from '../utils/getBasketProductsSum.js';
 export class Basket implements IBasket {
   readonly uuid: string;
   readonly discount: number = 1;
-  private list: Product[] = [];
+  private list: Map<Product, number> = new Map();
 
-  constructor(configObj?: {discount: number}) {
+  constructor(configObj?: { discount: number }) {
     const discount = configObj?.discount || 0;
     discountValidator(discount);
     this.uuid = uuidv4();
@@ -18,25 +18,23 @@ export class Basket implements IBasket {
   }
 
   get basketList() {
-    return this.list;
+    return new Map(this.list);
   }
 
   addProduct(newProduct: Product): void {
-    this.list.push(newProduct);
+    const cartProductQtyFound = this.list.get(newProduct);
+    this.list.set(newProduct, (cartProductQtyFound || 0) + 1);
   }
 
   removeProduct(toRmProduct: Product): void {
-    const foundFirstProductIndex = this.list.findIndex(
-      (inCartProd: Product) => inCartProd === toRmProduct
-    );
-    if (foundFirstProductIndex >= 0)
-      this.list = this.list.filter(
-        (_: Product, listIndex) => listIndex !== foundFirstProductIndex
-      );
+    const cartProductQtyFound = this.list.get(toRmProduct);
+    if (cartProductQtyFound && cartProductQtyFound > 0)
+      this.list.set(toRmProduct, cartProductQtyFound - 1);
+    if (cartProductQtyFound === 0) this.list.delete(toRmProduct);
   }
 
   removeAllProducts(): void {
-    this.list = [];
+    this.list.clear();
   }
 
   getFinalBasketValue(): number {
