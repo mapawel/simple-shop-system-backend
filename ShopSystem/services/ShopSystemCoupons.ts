@@ -1,30 +1,33 @@
 import { IshopSystemCoupons } from './IshopSystemCoupons';
-import { Coupon } from '../../Coupon/Coupon';
-import { couponsListValidator } from '../shopValidators/couponsListValidator.js';
 
 export class ShopSystemCoupons implements IshopSystemCoupons {
-  private usedCoupons: Coupon[] = [];
-  private unusedCoupons: Coupon[] = [];
+  private usedCoupons: Set<string> = new Set();
+  private unusedCoupons: Set<string> = new Set();
 
-  get shopCoupons() {
-    return this.unusedCoupons;
+  get validCoupons() {
+    return [...this.unusedCoupons];
   }
 
-  addShopCoupon(couponsList: Coupon[]): void {
-    couponsListValidator(this.unusedCoupons, couponsList);
-    this.unusedCoupons = [...this.unusedCoupons, ...couponsList];
+  validate(name: string) {
+    if (!name.trim().length) throw new Error('coupon name required');
+    if (name.trim().length > 8)
+      throw new Error('coupon name should be at maximum 8 characters long');
+    return;
   }
 
-  removeShopCoupons(couponsList: Coupon[]): void {
-    this.unusedCoupons = this.unusedCoupons.filter(
-      (shopCoupon: Coupon) => !couponsList.includes(shopCoupon)
-    );
+  addShopCoupon(coupon: string): void {
+    this.validate(coupon);
+    this.unusedCoupons.add(coupon);
   }
 
-  useShopCoupon(coupon: Coupon): void {
-    this.unusedCoupons = this.unusedCoupons.filter(
-      (shopCoupon: Coupon) => shopCoupon.cName !== coupon.cName
-    );
-    this.usedCoupons = [...this.usedCoupons, coupon];
+  removeShopCoupon(coupon: string): void {
+    this.validate(coupon);
+    this.unusedCoupons.delete(coupon);
+  }
+
+  useShopCoupon(coupon: string): void {
+    this.validate(coupon);
+    this.removeShopCoupon(coupon);
+    this.usedCoupons.add(coupon);
   }
 }

@@ -1,7 +1,6 @@
 import { Product } from './Product/Product.js';
 import { Basket } from './Basket/Basket.js';
 import { productCategories } from './Product/productCategoriesEnum.js';
-import { Coupon } from './Coupon/Coupon.js';
 import { ShopSystem } from './ShopSystem/ShopSystem.js';
 import { ShopSystemOffer } from './ShopSystem/services/ShopSystemOffer.js';
 import { ShopSystemCoupons } from './ShopSystem/services/ShopSystemCoupons.js';
@@ -49,7 +48,7 @@ b1.addProduct(p2);
 b1.addProduct(p2);
 // b1.removeProduct(p2);
 // b1.removeProduct(p3);
-console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
+// console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
 // console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.getFinalBasketValue());
 // b1.removeAllProducts();
 // INITIALIZE SHOP INSTANCE WITH NECESSARY SERVICES
@@ -88,23 +87,22 @@ shop.addOrUpdateShopProduct(p1, 1);
 shop.addOrUpdateShopProduct(p3, 333);
 
 // CHECK SHOP PRODUCTS STATUS AFTER MANIPULATION
-console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
+// console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
 
-// CREATE COUPONS
-const c1 = new Coupon('QWER');
-const c2 = new Coupon('ASDF');
-const c3 = new Coupon('ZXCV');
+// ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
+shop.addShopCoupon('QWE');
+shop.addShopCoupon('ASD');
+shop.addShopCoupon('ZXC');
+shop.addShopCoupon('ASD');
 
-// // ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
-// shop.addShopCoupon([c1, c2]);
-// shop.addShopCoupon([c3]);
-// shop.removeShopCoupons([c2]);
+shop.removeShopCoupon('ASD');
+shop.useShopCoupon('QWE');
 
-// console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
+console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
 
 // CHECKOUT WITH BASKET EARLIER CREATED
 shop.checkout(b1);
 
 // CHECK STOP STATUS
-console.log('SHOP PRODUCTS AFTER CHECKOUT ----> ', shop.shopProducts);
-console.log('SHOP CLOSED BASKETS ----> ', shop.closedBaskets);
+// console.log('SHOP PRODUCTS AFTER CHECKOUT ----> ', shop.shopProducts);
+// console.log('SHOP CLOSED BASKETS ----> ', shop.closedBaskets);

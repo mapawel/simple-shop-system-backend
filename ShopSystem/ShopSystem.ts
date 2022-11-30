@@ -3,11 +3,11 @@ import { IshopSystemOffer } from './services/IshopSystemOffer';
 import { IshopSystemCoupons } from './services/IshopSystemCoupons';
 import { Basket } from '../Basket/Basket.js';
 import { Product } from '../Product/Product.js';
-import { Coupon } from '../Coupon/Coupon.js';
 import { ShopSystemOffer } from './services/ShopSystemOffer';
 import { ShopSystemCoupons } from './services/ShopSystemCoupons';
 
-export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons {
+// export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons { .   // ?? :)
+export class ShopSystem {
   readonly uuid: string;
   private shopOffer: ShopSystemOffer;
   private shopCoupons: ShopSystemCoupons;
@@ -27,7 +27,7 @@ export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons {
   }
 
   get showShopCoupons() {
-    return [...this.shopCoupons.shopCoupons];
+    return [...this.shopCoupons.validCoupons];
   }
 
   addOrUpdateShopProduct(product: Product, qty: number) {
@@ -43,13 +43,13 @@ export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons {
     this.shopOffer.checkout(basket);
   }
 
-  addShopCoupon(couponList: Coupon[]) {
-    this.shopCoupons.addShopCoupon(couponList);
+  addShopCoupon(coupon: string) {
+    this.shopCoupons.addShopCoupon(coupon);
   }
-  removeShopCoupons(couponList: Coupon[]) {
-    this.shopCoupons.removeShopCoupons(couponList);
+  removeShopCoupon(coupon: string) {
+    this.shopCoupons.removeShopCoupon(coupon);
   }
-  useShopCoupon(coupon: Coupon) {
+  useShopCoupon(coupon: string) {
     this.shopCoupons.useShopCoupon(coupon);
   }
 }
