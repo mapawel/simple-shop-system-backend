@@ -39,18 +39,20 @@ const p5 = new Product({
 });
 
 // ADD SOME PRODUCTS TO BASKET
-const b1 = new Basket({ discount: 0.5 });
+const b1 = new Basket({ discount: 0 });
 b1.addProduct(p1);
 // b1.addProduct(p1);
 // b1.addProduct(p1);
+console.log(b1.addProduct(p2));
 b1.addProduct(p2);
 b1.addProduct(p2);
-b1.addProduct(p2);
-// b1.removeProduct(p2);
+console.log(b1.removeProduct(p2));
+// console.log(b1.removeAllProducts());
 // b1.removeProduct(p3);
 // console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
 // console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.getFinalBasketValue());
 // b1.removeAllProducts();
+
 // INITIALIZE SHOP INSTANCE WITH NECESSARY SERVICES
 const shopSystemOffer = new ShopSystemOffer();
 const shopSystemCoupons = new ShopSystemCoupons();
@@ -78,9 +80,14 @@ const shop = new ShopSystem(shopSystemOffer, shopSystemCoupons);
     product: p5,
     qty: 55,
   },
-].forEach(({ product, qty }) => shop.addOrUpdateShopProduct(product, qty));
+].forEach(({ product, qty }) =>
+  console.log(
+    'shop system add product: ',
+    shop.addOrUpdateShopProduct(product, qty)
+  )
+);
 
-shop.removeShopProduct(p5);
+console.log('shop system rm product: ', shop.removeShopProduct(p5));
 shop.removeShopProduct(p1);
 
 shop.addOrUpdateShopProduct(p1, 1);
@@ -90,18 +97,18 @@ shop.addOrUpdateShopProduct(p3, 333);
 // console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
 
 // ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
-shop.addShopCoupon('QWE');
+console.log('coupon manipulation response: ', shop.addShopCoupon('QWE'));
 shop.addShopCoupon('ASD');
 shop.addShopCoupon('ZXC');
 shop.addShopCoupon('ASD');
 
-shop.removeShopCoupon('ASD');
-shop.useShopCoupon('QWE');
+console.log('coupon manipulation response: ', shop.removeShopCoupon('ASD'));
+console.log('coupon manipulation response: ', shop.useShopCoupon('QWE'));
 
-console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
+// console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
 
 // CHECKOUT WITH BASKET EARLIER CREATED
-shop.checkout(b1);
+console.log('shop system checkout response: ', shop.checkout(b1));
 
 // CHECK STOP STATUS
 // console.log('SHOP PRODUCTS AFTER CHECKOUT ----> ', shop.shopProducts);

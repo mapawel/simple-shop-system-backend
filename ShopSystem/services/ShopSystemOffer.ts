@@ -2,6 +2,7 @@ import { Product } from '../../Product/Product';
 import { IshopSystemOffer } from './IshopSystemOffer';
 import { Basket } from '../../Basket/Basket.js';
 import { qtyValidator } from '../../generalValidators/qtyValidator';
+import { OperationStatus } from '../../OperationStatus/OperationStatus';
 
 export class ShopSystemOffer implements IshopSystemOffer {
   private productList: Map<Product, number> = new Map();
@@ -24,16 +25,31 @@ export class ShopSystemOffer implements IshopSystemOffer {
     }
   }
 
-  addOrUpdateShopProduct(product: Product, qty: number): void {
+  addOrUpdateShopProduct(
+    product: Product,
+    qty: number
+  ): OperationStatus<Product> {
     qtyValidator(qty);
     this.productList.set(product, qty);
+    return new OperationStatus<Product>(
+      'Product in the shop system added or updated succesfully.',
+      product
+    );
   }
 
-  removeShopProduct(product: Product): void {
+  removeShopProduct(product: Product): OperationStatus<Product> {
     this.productList.delete(product);
+    return new OperationStatus<Product>(
+      'Product in the shop system removed succesfully.',
+      product
+    );
   }
 
-  checkout(basket: Basket): void {
+  checkout(basket: Basket): {
+    status: OperationStatus<Basket>;
+    basketValue: number;
+  } {
+    if (!basket.basketList.size) throw new Error('Cannot proceed checkout with an empty basket.')
     this.validateStock(basket.basketList);
 
     for (let [product, qty] of basket.basketList.entries()) {
@@ -41,7 +57,16 @@ export class ShopSystemOffer implements IshopSystemOffer {
       this.addOrUpdateShopProduct(product, currentShopQty - qty);
     }
 
+    const basketValue = basket.getFinalBasketValue();
     this.closedBasketList.set(basket, new Date());
+
+    return {
+      status: new OperationStatus<Basket>(
+        'Checkout proceeded successfully',
+        basket
+      ),
+      basketValue,
+    };
   }
 }
 

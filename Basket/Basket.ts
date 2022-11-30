@@ -4,6 +4,7 @@ import { Product } from '../Product/Product.js';
 import { discountValidator } from '../generalValidators/discountValidator.js';
 import { getDiscontedFormatedPrc } from '../utils/getDiscontedFormatedPrc.js';
 import { getBasketProductsSum } from '../utils/getBasketProductsSum.js';
+import { OperationStatus } from '../OperationStatus/OperationStatus';
 
 export class Basket implements IBasket {
   readonly uuid: string;
@@ -21,20 +22,32 @@ export class Basket implements IBasket {
     return new Map(this.list);
   }
 
-  addProduct(newProduct: Product): void {
+  addProduct(newProduct: Product): OperationStatus<Product> {
     const cartProductQtyFound = this.list.get(newProduct);
     this.list.set(newProduct, (cartProductQtyFound || 0) + 1);
+    return new OperationStatus<Product>(
+      'Product added to the basket succesfully.',
+      newProduct
+    );
   }
 
-  removeProduct(toRmProduct: Product): void {
+  removeProduct(toRmProduct: Product): OperationStatus<Product> {
     const cartProductQtyFound = this.list.get(toRmProduct);
     if (cartProductQtyFound && cartProductQtyFound > 0)
       this.list.set(toRmProduct, cartProductQtyFound - 1);
     if (cartProductQtyFound === 0) this.list.delete(toRmProduct);
+    return new OperationStatus(
+      'Product removed from the basket succesfully.',
+      toRmProduct
+    );
   }
 
-  removeAllProducts(): void {
+  removeAllProducts(): OperationStatus<null> {
     this.list.clear();
+    return new OperationStatus(
+      'All products removed from the basket succesfully.',
+      null
+    );
   }
 
   getFinalBasketValue(): number {

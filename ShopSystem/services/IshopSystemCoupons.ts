@@ -1,5 +1,7 @@
+import { OperationStatus } from "../../OperationStatus/OperationStatus";
+
 export interface IshopSystemCoupons {
-  addShopCoupon(coupon: string): void;
-  removeShopCoupon(coupon: string): void;
-  useShopCoupon(coupon: string): void;
+  addShopCoupon(coupon: string): OperationStatus<string>;
+  removeShopCoupon(coupon: string): OperationStatus<string>;
+  useShopCoupon(coupon: string): OperationStatus<string>;
 }

@@ -31,25 +31,25 @@ export class ShopSystem {
   }
 
   addOrUpdateShopProduct(product: Product, qty: number) {
-    this.shopOffer.addOrUpdateShopProduct(product, qty);
+    return this.shopOffer.addOrUpdateShopProduct(product, qty);
   }
   // gdy miałem tu implementację podawania w argumentach obiektów to mogłem podawać całą tablicę obiekt-produkt + qty. ... ?
 
   removeShopProduct(product: Product) {
-    this.shopOffer.removeShopProduct(product);
+    return this.shopOffer.removeShopProduct(product);
   }
 
   checkout(basket: Basket) {
-    this.shopOffer.checkout(basket);
+    return this.shopOffer.checkout(basket);
   }
 
   addShopCoupon(coupon: string) {
-    this.shopCoupons.addShopCoupon(coupon);
+    return this.shopCoupons.addShopCoupon(coupon);
   }
   removeShopCoupon(coupon: string) {
-    this.shopCoupons.removeShopCoupon(coupon);
+    return this.shopCoupons.removeShopCoupon(coupon);
   }
   useShopCoupon(coupon: string) {
-    this.shopCoupons.useShopCoupon(coupon);
+    return this.shopCoupons.useShopCoupon(coupon);
   }
 }
