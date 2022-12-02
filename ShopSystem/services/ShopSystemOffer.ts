@@ -3,10 +3,12 @@ import { IshopSystemOffer } from './IshopSystemOffer';
 import { Basket } from '../../Basket/Basket.js';
 import { qtyValidator } from '../../generalValidators/qtyValidator';
 import { OperationStatus } from '../../OperationStatus/OperationStatus';
+import { ProductWhQty } from '../../Product/ProductWhQty';
+import { BasketWhDate } from '../../Basket/BasketWhDate';
 
 export class ShopSystemOffer implements IshopSystemOffer {
-  private productList: Map<Product, number> = new Map();
-  private closedBasketList: Map<Basket, Date> = new Map();
+  private productList: Map<string, ProductWhQty> = new Map();
+  private closedBasketList: Map<string, BasketWhDate> = new Map();
 
   get shopProducts() {
     return [...this.productList];
@@ -16,11 +18,11 @@ export class ShopSystemOffer implements IshopSystemOffer {
     return [...this.closedBasketList];
   }
 
-  validateStock(map: Map<Product, number>) {
-    for (let [product, qty] of map) {
-      if ((this.productList.get(product) || 0) < qty)
+  validateStock(map: Map<string, ProductWhQty>) {
+    for (let [_, productItem] of map) {
+      if ((this.productList.get(productItem.product.uuid)?.qty || 0) < productItem.qty)
         throw new Error(
-          `Stock on shop for product: ${product.name} is not sufficient to proceed checkout.`
+          `Stock on shop for product: ${productItem.product.name} is not sufficient to proceed checkout.`
         );
     }
   }
@@ -30,7 +32,10 @@ export class ShopSystemOffer implements IshopSystemOffer {
     qty: number
   ): OperationStatus<Product> {
     qtyValidator(qty);
-    this.productList.set(product, qty);
+    this.productList.set(product.uuid, {
+      product,
+      qty,
+    });
     return new OperationStatus<Product>(
       'Product in the shop system added or updated succesfully.',
       product
@@ -38,7 +43,7 @@ export class ShopSystemOffer implements IshopSystemOffer {
   }
 
   removeShopProduct(product: Product): OperationStatus<Product> {
-    this.productList.delete(product);
+    this.productList.delete(product.uuid);
     return new OperationStatus<Product>(
       'Product in the shop system removed succesfully.',
       product
@@ -49,16 +54,18 @@ export class ShopSystemOffer implements IshopSystemOffer {
     status: OperationStatus<Basket>;
     basketValue: number;
   } {
-    if (!basket.basketList.size) throw new Error('Cannot proceed checkout with an empty basket.')
+    if (!basket.basketList.size)
+      throw new Error('Cannot proceed checkout with an empty basket.');
     this.validateStock(basket.basketList);
 
-    for (let [product, qty] of basket.basketList.entries()) {
-      const currentShopQty = this.productList.get(product) || 0;
-      this.addOrUpdateShopProduct(product, currentShopQty - qty);
+    for (let [_, { product, qty }] of basket.basketList.entries()) {
+      const currentShopItem = this.productList.get(product.uuid);
+      if (currentShopItem)
+        this.addOrUpdateShopProduct(product, currentShopItem.qty - qty);
     }
 
     const basketValue = basket.getFinalBasketValue();
-    this.closedBasketList.set(basket, new Date());
+    this.closedBasketList.set(basket.uuid, { basket, date: new Date() });
 
     return {
       status: new OperationStatus<Basket>(

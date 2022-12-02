@@ -5,11 +5,12 @@ import { discountValidator } from '../generalValidators/discountValidator.js';
 import { getDiscontedFormatedPrc } from '../utils/getDiscontedFormatedPrc.js';
 import { getBasketProductsSum } from '../utils/getBasketProductsSum.js';
 import { OperationStatus } from '../OperationStatus/OperationStatus';
+import { ProductWhQty } from '../Product/ProductWhQty';
 
 export class Basket implements IBasket {
   readonly uuid: string;
   readonly discount: number = 1;
-  private list: Map<Product, number> = new Map();
+  private list: Map<string, ProductWhQty> = new Map();
 
   constructor(configObj?: { discount: number }) {
     const discount = configObj?.discount || 0;
@@ -23,8 +24,14 @@ export class Basket implements IBasket {
   }
 
   addProduct(newProduct: Product): OperationStatus<Product> {
-    const cartProductQtyFound = this.list.get(newProduct);
-    this.list.set(newProduct, (cartProductQtyFound || 0) + 1);
+    const cartProductItemFound = this.list.get(newProduct.uuid);
+    const qty = cartProductItemFound ? cartProductItemFound.qty + 1 : 1;
+
+    this.list.set(newProduct.uuid, {
+      product: newProduct,
+      qty,
+    });
+
     return new OperationStatus<Product>(
       'Product added to the basket succesfully.',
       newProduct
@@ -32,10 +39,15 @@ export class Basket implements IBasket {
   }
 
   removeProduct(toRmProduct: Product): OperationStatus<Product> {
-    const cartProductQtyFound = this.list.get(toRmProduct);
-    if (cartProductQtyFound && cartProductQtyFound > 0)
-      this.list.set(toRmProduct, cartProductQtyFound - 1);
-    if (cartProductQtyFound === 0) this.list.delete(toRmProduct);
+    const cartProductItemFound = this.list.get(toRmProduct.uuid);
+
+    if (cartProductItemFound && cartProductItemFound.qty > 1)
+      this.list.set(toRmProduct.uuid, {
+        product: cartProductItemFound.product,
+        qty: cartProductItemFound.qty - 1,
+      });
+    if (cartProductItemFound?.qty === 1)
+      this.list.delete(cartProductItemFound.product.uuid);
     return new OperationStatus(
       'Product removed from the basket succesfully.',
       toRmProduct

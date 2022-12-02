@@ -5,7 +5,7 @@ import { ShopSystem } from './ShopSystem/ShopSystem.js';
 import { ShopSystemOffer } from './ShopSystem/services/ShopSystemOffer.js';
 import { ShopSystemCoupons } from './ShopSystem/services/ShopSystemCoupons.js';
 
-// CREATE EXAMPLE PRODUCTS INSTANCES
+// // CREATE EXAMPLE PRODUCTS INSTANCES
 const p1 = new Product({
   name: 'Nice Jacket',
   category: productCategories.JACKET,
@@ -39,14 +39,14 @@ const p5 = new Product({
 });
 
 // ADD SOME PRODUCTS TO BASKET
-const b1 = new Basket({ discount: 0 });
+const b1 = new Basket({ discount: 0.5 });
+b1.addProduct(p1);
 b1.addProduct(p1);
 // b1.addProduct(p1);
-// b1.addProduct(p1);
-console.log(b1.addProduct(p2));
+// console.log(b1.addProduct(p2));
 b1.addProduct(p2);
 b1.addProduct(p2);
-console.log(b1.removeProduct(p2));
+b1.addProduct(p2);
 // console.log(b1.removeAllProducts());
 // b1.removeProduct(p3);
 // console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
@@ -80,12 +80,7 @@ const shop = new ShopSystem(shopSystemOffer, shopSystemCoupons);
     product: p5,
     qty: 55,
   },
-].forEach(({ product, qty }) =>
-  console.log(
-    'shop system add product: ',
-    shop.addOrUpdateShopProduct(product, qty)
-  )
-);
+].forEach(({ product, qty }) => shop.addOrUpdateShopProduct(product, qty));
 
 console.log('shop system rm product: ', shop.removeShopProduct(p5));
 shop.removeShopProduct(p1);
@@ -94,22 +89,22 @@ shop.addOrUpdateShopProduct(p1, 1);
 shop.addOrUpdateShopProduct(p3, 333);
 
 // CHECK SHOP PRODUCTS STATUS AFTER MANIPULATION
-// console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
+console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
 
-// ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
-console.log('coupon manipulation response: ', shop.addShopCoupon('QWE'));
-shop.addShopCoupon('ASD');
-shop.addShopCoupon('ZXC');
-shop.addShopCoupon('ASD');
+// // ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
+// console.log('coupon manipulation response: ', shop.addShopCoupon('QWE'));
+// shop.addShopCoupon('ASD');
+// shop.addShopCoupon('ZXC');
+// shop.addShopCoupon('ASD');
 
-console.log('coupon manipulation response: ', shop.removeShopCoupon('ASD'));
-console.log('coupon manipulation response: ', shop.useShopCoupon('QWE'));
+// console.log('coupon manipulation response: ', shop.removeShopCoupon('ASD'));
+// console.log('coupon manipulation response: ', shop.useShopCoupon('QWE'));
 
-// console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
+// // console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
 
-// CHECKOUT WITH BASKET EARLIER CREATED
+// // CHECKOUT WITH BASKET EARLIER CREATED
 console.log('shop system checkout response: ', shop.checkout(b1));
 
 // CHECK STOP STATUS
-// console.log('SHOP PRODUCTS AFTER CHECKOUT ----> ', shop.shopProducts);
-// console.log('SHOP CLOSED BASKETS ----> ', shop.closedBaskets);
+console.log('SHOP PRODUCTS AFTER CHECKOUT ----> ', shop.shopProducts);
+console.log('SHOP CLOSED BASKETS ----> ', shop.closedBaskets);

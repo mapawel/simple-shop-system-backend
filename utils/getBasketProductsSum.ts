@@ -1,9 +1,10 @@
 import { Product } from '../Product/Product';
+import { ProductWhQty } from '../Product/ProductWhQty';
 
-export const getBasketProductsSum = (list: Map<Product, number>) => {
+export const getBasketProductsSum = (list: Map<string, ProductWhQty>) => {
   let sum: number = 0;
-  for (let [product, qty] of list.entries()) {
-    sum += product.getFinalPrice() * qty;
+  for (let productItem of list.values()) {
+    sum += productItem.product.getFinalPrice() * productItem.qty;
   }
   return sum;
 };
