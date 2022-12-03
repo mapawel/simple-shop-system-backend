@@ -5,6 +5,8 @@ import { Basket } from '../Basket/Basket.js';
 import { Product } from '../Product/Product.js';
 import { ShopSystemOffer } from './services/ShopSystemOffer';
 import { ShopSystemCoupons } from './services/ShopSystemCoupons';
+import { ProductWhQty } from '../Product/ProductWhQty';
+import { BasketWhDate } from '../Basket/BasketWhDate';
 
 // export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons { .   // ?? :)
 export class ShopSystem {
@@ -18,38 +20,38 @@ export class ShopSystem {
     this.shopCoupons = shopCoupons;
   }
 
-  get shopProducts() {
-    return [...this.shopOffer.shopProducts];
+  get shopProducts(): Map<string, ProductWhQty> {
+    return this.shopOffer.shopProducts;
   }
 
-  get closedBaskets() {
-    return [...this.shopOffer.closedBaskets];
+  get closedBaskets(): Map<string, BasketWhDate> {
+    return this.shopOffer.closedBaskets;
   }
 
-  get showShopCoupons() {
-    return [...this.shopCoupons.validCoupons];
+  get showShopCoupons(): Set<string> {
+    return this.shopCoupons.validCoupons;
   }
 
-  addOrUpdateShopProduct(product: Product, qty: number) {
+  addOrUpdateShopProduct(product: Product, qty: number): boolean {
     return this.shopOffer.addOrUpdateShopProduct(product, qty);
   }
   // gdy miałem tu implementację podawania w argumentach obiektów to mogłem podawać całą tablicę obiekt-produkt + qty. ... ?
 
-  removeShopProduct(product: Product) {
+  removeShopProduct(product: Product): boolean {
     return this.shopOffer.removeShopProduct(product);
   }
 
-  checkout(basket: Basket) {
+  checkout(basket: Basket): number {
     return this.shopOffer.checkout(basket);
   }
 
-  addShopCoupon(coupon: string) {
+  addShopCoupon(coupon: string): Set<string> {
     return this.shopCoupons.addShopCoupon(coupon);
   }
-  removeShopCoupon(coupon: string) {
+  removeShopCoupon(coupon: string): Set<string> {
     return this.shopCoupons.removeShopCoupon(coupon);
   }
-  useShopCoupon(coupon: string) {
+  useShopCoupon(coupon: string): boolean {
     return this.shopCoupons.useShopCoupon(coupon);
   }
 }

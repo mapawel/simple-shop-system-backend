@@ -40,25 +40,23 @@ const p5 = new Product({
 
 // ADD SOME PRODUCTS TO BASKET
 const b1 = new Basket({ discount: 0.5 });
-b1.addProduct(p1);
-b1.addProduct(p1);
+
 // b1.addProduct(p1);
-// console.log(b1.addProduct(p2));
+b1.addProduct(p1);
 b1.addProduct(p2);
 b1.addProduct(p2);
 b1.addProduct(p2);
-// console.log(b1.removeAllProducts());
-// b1.removeProduct(p3);
-// console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
+b1.removeProduct(p2);
+console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
+console.log('++++++++++++++++++++++++++++++++++++ ----> ', b1.basket);
 // console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.getFinalBasketValue());
-// b1.removeAllProducts();
 
 // INITIALIZE SHOP INSTANCE WITH NECESSARY SERVICES
 const shopSystemOffer = new ShopSystemOffer();
 const shopSystemCoupons = new ShopSystemCoupons();
 const shop = new ShopSystem(shopSystemOffer, shopSystemCoupons);
 
-// ADD PRODUCTS TO STOCK TO SHOP INSTANCE AND STOCK MANIPULATION
+// // ADD PRODUCTS TO STOCK TO SHOP INSTANCE AND STOCK MANIPULATION
 [
   {
     product: p1,
@@ -91,18 +89,18 @@ shop.addOrUpdateShopProduct(p3, 333);
 // CHECK SHOP PRODUCTS STATUS AFTER MANIPULATION
 console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
 
-// // ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
-// console.log('coupon manipulation response: ', shop.addShopCoupon('QWE'));
-// shop.addShopCoupon('ASD');
-// shop.addShopCoupon('ZXC');
-// shop.addShopCoupon('ASD');
+// ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
+console.log('coupon manipulation response: ', shop.addShopCoupon('QWE'));
+shop.addShopCoupon('ASD');
+shop.addShopCoupon('ZXC');
+shop.addShopCoupon('ASD');
 
-// console.log('coupon manipulation response: ', shop.removeShopCoupon('ASD'));
-// console.log('coupon manipulation response: ', shop.useShopCoupon('QWE'));
+console.log('coupon manipulation response: ', shop.removeShopCoupon('ASD'));
+console.log('coupon manipulation response: ', shop.useShopCoupon('QWE'));
 
-// // console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
+// console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
 
-// // CHECKOUT WITH BASKET EARLIER CREATED
+// CHECKOUT WITH BASKET EARLIER CREATED
 console.log('shop system checkout response: ', shop.checkout(b1));
 
 // CHECK STOP STATUS

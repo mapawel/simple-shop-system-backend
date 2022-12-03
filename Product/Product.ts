@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { productCategories } from './productCategoriesEnum';
 import { IProduct } from './IProduct';
 import { IProductParams } from './IProductParams';
-import { nameValidator } from '../generalValidators/nameValidator.js';
-import { priceValidator } from '../generalValidators/priceValidator.js';
-import { discountValidator } from '../generalValidators/discountValidator.js';
+import { nameValidator } from '../validators/nameValidator.js';
+import { priceValidator } from '../validators/priceValidator.js';
+import { discountValidator } from '../validators/discountValidator.js';
 import { getDiscontedFormatedPrc } from '../utils/getDiscontedFormatedPrc.js';
 
 export class Product implements IProduct {
