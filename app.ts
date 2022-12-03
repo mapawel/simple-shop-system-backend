@@ -41,15 +41,17 @@ const p5 = new Product({
 // ADD SOME PRODUCTS TO BASKET
 const b1 = new Basket({ discount: 0.5 });
 
-// b1.addProduct(p1);
 b1.addProduct(p1);
 b1.addProduct(p2);
 b1.addProduct(p2);
 b1.addProduct(p2);
+
+console.log('basket after adding products----> ', b1.basketList);
+
+// REMOVE A PRODUCT FROM BASKET
 b1.removeProduct(p2);
-console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.basketList);
-console.log('++++++++++++++++++++++++++++++++++++ ----> ', b1.basket);
-// console.log('>>>>>>>>>>>>>>>>>>>> ----> ', b1.getFinalBasketValue());
+
+console.log('basket after removing product----> ', b1.basketList);
 
 // INITIALIZE SHOP INSTANCE WITH NECESSARY SERVICES
 const shopSystemOffer = new ShopSystemOffer();
@@ -80,25 +82,31 @@ const shop = new ShopSystem(shopSystemOffer, shopSystemCoupons);
   },
 ].forEach(({ product, qty }) => shop.addOrUpdateShopProduct(product, qty));
 
-console.log('shop system rm product: ', shop.removeShopProduct(p5));
+console.log('SHOP PRODUCTS AFTER ADDING PRODUCTS----> ', shop.shopProducts);
+
+
+// REMOVE SOME PRODUCTS FROM SHOP OR CHANGE THE QTY
+shop.removeShopProduct(p5);
 shop.removeShopProduct(p1);
 
 shop.addOrUpdateShopProduct(p1, 1);
 shop.addOrUpdateShopProduct(p3, 333);
 
-// CHECK SHOP PRODUCTS STATUS AFTER MANIPULATION
-console.log('SHOP PRODUCTS ----> ', shop.shopProducts);
+console.log('SHOP PRODUCTS AFTER ADDING PRODUCTS----> ', shop.shopProducts);
 
 // ADD COUPONS TO SHOP INSTANCE AND COUPONS MANIPULATION
-console.log('coupon manipulation response: ', shop.addShopCoupon('QWE'));
+shop.addShopCoupon('QWE');
 shop.addShopCoupon('ASD');
 shop.addShopCoupon('ZXC');
 shop.addShopCoupon('ASD');
 
-console.log('coupon manipulation response: ', shop.removeShopCoupon('ASD'));
-console.log('coupon manipulation response: ', shop.useShopCoupon('QWE'));
+console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
 
-// console.log('SHOP UNUSED COUPONS ----> ', shop.showShopCoupons);
+// REMOVE SOME COUPONS
+shop.removeShopCoupon('ASD');
+shop.removeShopCoupon('QWE');
+
+console.log('SHOP UNUSED COUPONS AFTER REMOVING----> ', shop.showShopCoupons);
 
 // CHECKOUT WITH BASKET EARLIER CREATED
 console.log('shop system checkout response: ', shop.checkout(b1));

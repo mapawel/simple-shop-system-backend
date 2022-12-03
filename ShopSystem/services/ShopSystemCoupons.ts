@@ -8,6 +8,10 @@ export class ShopSystemCoupons implements IshopSystemCoupons {
     return new Set(this.unusedCoupons);
   }
 
+  get notValidCoupons(): Set<string> {
+    return new Set(this.usedCoupons);
+  }
+
   validate(name: string): void | Error {
     if (!name.trim().length) throw new Error('coupon name required');
     if (name.trim().length > 8)
