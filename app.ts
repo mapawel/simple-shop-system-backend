@@ -108,6 +108,8 @@ shop.removeShopCoupon('QWE');
 
 console.log('SHOP UNUSED COUPONS AFTER REMOVING----> ', shop.showShopCoupons);
 
+b1.getFinalBasketValue()
+
 // CHECKOUT WITH BASKET EARLIER CREATED
 console.log('shop system checkout response: ', shop.checkout(b1));
 

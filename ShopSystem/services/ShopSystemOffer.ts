@@ -58,5 +58,3 @@ export class ShopSystemOffer implements IshopSystemOffer {
     return basket.getFinalBasketValue();
   }
 }
-
-//TODO jak zrobić najefektywniej, aby przykłądowo metoda checkout mogła gadać z instancją klasy shopCoupons?

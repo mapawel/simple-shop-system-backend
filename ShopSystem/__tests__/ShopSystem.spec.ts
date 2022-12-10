@@ -67,6 +67,13 @@ describe('ShopSystem:', () => {
         )
       );
     });
+
+    it('should throw error as to wrong qty passed', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.addOrUpdateShopProduct(productItems[0].product, -1);
+      }, 'Quantity has to be a positive number.');
+    });
   });
 
   describe('removeShopProduct method:', () => {
@@ -114,6 +121,46 @@ describe('ShopSystem:', () => {
       const shopUsedCoupons = testShopCoupons.notValidCoupons;
       assert.deepEqual(new Set([initialCoupons[2]]), shopCoupons);
       assert.deepEqual(new Set([initialCoupons[1]]), shopUsedCoupons);
+    });
+  });
+
+  describe('coupon validator for each coupon method:', () => {
+    it('should validate no proper coupon name (empty string) for addShopCoupon method', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.addShopCoupon('');
+      }, 'coupon name required');
+    });
+    it('should validate no proper coupon name (empty string) for removeShopCoupon method', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.removeShopCoupon('');
+      }, 'coupon name required');
+    });
+    it('should validate no proper coupon name (empty string) for useShopCoupon method', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.useShopCoupon('');
+      }, 'coupon name required');
+    });
+
+    it('should validate no proper coupon name (too long string) for addShopCoupon method', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.addShopCoupon('123456789');
+      }, 'coupon name should be at maximum 8 characters long');
+    });
+    it('should validate no proper coupon name (too long string) for removeShopCoupon method', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.removeShopCoupon('123456789');
+      }, 'coupon name should be at maximum 8 characters long');
+    });
+    it('should validate no proper coupon name (too long string) for useShopCoupon method', () => {
+      // act+assert
+      assert.throws(() => {
+        testShop.useShopCoupon('123456789');
+      }, 'coupon name should be at maximum 8 characters long');
     });
   });
 

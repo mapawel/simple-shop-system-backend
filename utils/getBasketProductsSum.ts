@@ -1,12 +1,11 @@
-import { Product } from '../Product/Product';
 import { ProductWhQty } from '../Product/ProductWhQty';
 
 export const getBasketProductsSum = (
   list: Map<string, ProductWhQty>
 ): number => {
-  let sum: number = 0;
-  for (let productItem of list.values()) {
-    sum += productItem.product.getFinalPrice() * productItem.qty;
-  }
-  return sum;
+  const listArr = Array.from(list.values());
+  return listArr.reduce(
+    (acc: number, x: ProductWhQty) => acc + x.product.getFinalPrice() * x.qty,
+    0
+  );
 };

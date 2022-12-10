@@ -26,7 +26,7 @@ export class Basket implements IBasket {
     return new Map(this.list);
   }
 
-  addProduct(newProduct: Product): Map<string, ProductWhQty> {
+  addProduct(newProduct: Product): boolean {
     const cartProductItemFound: ProductWhQty | undefined = this.list.get(
       newProduct.uuid
     );
@@ -37,10 +37,10 @@ export class Basket implements IBasket {
       qty,
     });
 
-    return new Map(this.list);
+    return true
   }
 
-  removeProduct(toRmProduct: Product): Map<string, ProductWhQty> {
+  removeProduct(toRmProduct: Product): boolean {
     const cartProductItemFound: ProductWhQty | undefined = this.list.get(
       toRmProduct.uuid
     );
@@ -53,13 +53,13 @@ export class Basket implements IBasket {
     if (cartProductItemFound?.qty === 1)
       this.list.delete(cartProductItemFound.product.uuid);
 
-    return new Map(this.list);
+    return true
   }
 
-  removeAllProducts(): Map<string, ProductWhQty> {
+  removeAllProducts(): boolean {
     this.list.clear();
 
-    return new Map(this.list);
+    return true
   }
 
   getFinalBasketValue(): number {

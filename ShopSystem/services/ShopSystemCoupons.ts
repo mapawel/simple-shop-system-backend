@@ -12,23 +12,23 @@ export class ShopSystemCoupons implements IshopSystemCoupons {
     return new Set(this.usedCoupons);
   }
 
-  validate(name: string): void | Error {
+  private validate(name: string): void {
     if (!name.trim().length) throw new Error('coupon name required');
     if (name.trim().length > 8)
       throw new Error('coupon name should be at maximum 8 characters long');
     return;
   }
 
-  addShopCoupon(coupon: string): Set<string> {
+  addShopCoupon(coupon: string): boolean {
     this.validate(coupon);
     this.unusedCoupons.add(coupon);
-    return new Set(this.unusedCoupons);
+    return true
   }
 
-  removeShopCoupon(coupon: string): Set<string> {
+  removeShopCoupon(coupon: string): boolean {
     this.validate(coupon);
     this.unusedCoupons.delete(coupon);
-    return new Set(this.unusedCoupons);
+    return true
   }
 
   useShopCoupon(coupon: string): boolean {

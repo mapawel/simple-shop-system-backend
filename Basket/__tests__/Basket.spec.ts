@@ -27,18 +27,20 @@ describe('Basket:', () => {
   describe('addProduct method:', () => {
     it('method "addProduct" should add a Product with quantity object to the Basket products map', () => {
       // act
-      products.forEach(
-        (product: Product): Map<string, ProductWhQty> =>
-          createdBasket.addProduct(product)
+
+      // adding products first time => qty = 1
+      products.forEach((product: Product): boolean =>
+        createdBasket.addProduct(product)
       );
-      products.forEach(
-        (product: Product): Map<string, ProductWhQty> =>
-          createdBasket.addProduct(product)
+      // adding products second time => qty = 2
+      products.forEach((product: Product): boolean =>
+        createdBasket.addProduct(product)
       );
 
       // assert
       const productsList: Map<string, ProductWhQty> = createdBasket.basketList;
-      productsList.forEach((productItem: ProductWhQty, _: string) => {
+
+      productsList.forEach((productItem: ProductWhQty) => {
         assert.deepEqual(
           productItem.product,
           products.find(
@@ -47,6 +49,7 @@ describe('Basket:', () => {
         );
       });
     });
+
     it('method "addProduct" should add a Product item to the Basket with qty key = 2', () => {
       const productsList: Map<string, ProductWhQty> = createdBasket.basketList;
       productsList.forEach((productItem: ProductWhQty, _: string) => {
@@ -58,9 +61,8 @@ describe('Basket:', () => {
   describe('removeProduct method:', () => {
     it('method "removeProduct" should decrease qty key form 2 to 1 in product item in basket', () => {
       // act
-      products.forEach(
-        (product: Product): Map<string, ProductWhQty> =>
-          createdBasket.removeProduct(product)
+      products.forEach((product: Product): boolean =>
+        createdBasket.removeProduct(product)
       );
 
       // assert

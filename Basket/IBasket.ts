@@ -5,8 +5,8 @@ import { Basket } from './Basket';
 export interface IBasket {
   basketList: Map<string, ProductWhQty>;
   basket: Basket;
-  addProduct(newProduct: Product): Map<string, ProductWhQty>;
-  removeProduct(toRmProduct: Product): Map<string, ProductWhQty>;
-  removeAllProducts(): Map<string, ProductWhQty>;
+  addProduct(newProduct: Product): boolean;
+  removeProduct(toRmProduct: Product): boolean;
+  removeAllProducts(): boolean;
   getFinalBasketValue(): number;
 }

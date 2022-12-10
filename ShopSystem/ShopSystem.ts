@@ -8,7 +8,6 @@ import { ShopSystemCoupons } from './services/ShopSystemCoupons';
 import { ProductWhQty } from '../Product/ProductWhQty';
 import { BasketWhDate } from '../Basket/BasketWhDate';
 
-// export class ShopSystem implements IshopSystemOffer, IshopSystemCoupons { .   // ?? :)
 export class ShopSystem {
   readonly uuid: string;
   private shopOffer: ShopSystemOffer;
@@ -45,10 +44,10 @@ export class ShopSystem {
     return this.shopOffer.checkout(basket);
   }
 
-  addShopCoupon(coupon: string): Set<string> {
+  addShopCoupon(coupon: string): boolean {
     return this.shopCoupons.addShopCoupon(coupon);
   }
-  removeShopCoupon(coupon: string): Set<string> {
+  removeShopCoupon(coupon: string): boolean {
     return this.shopCoupons.removeShopCoupon(coupon);
   }
   useShopCoupon(coupon: string): boolean {
