@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { productCategories } from './productCategoriesEnum';
-import { IProduct } from './IProduct';
-import { IProductParams } from './IProductParams';
+import { productCategories } from './productCategories.enum';
+import { IProduct } from './Product.interface';
+import { IProductParams } from './ProductParams.interface';
 import { nameValidator } from '../validators/nameValidator.js';
 import { priceValidator } from '../validators/priceValidator.js';
 import { discountValidator } from '../validators/discountValidator.js';

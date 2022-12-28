@@ -1,5 +1,5 @@
-import { Product } from '../../Product/Product';
-import { Basket } from '../../Basket/Basket';
+import { Product } from '../../Product/Product.class';
+import { Basket } from '../../Basket/Basket.class';
 
 export interface IshopSystemOffer {
   addOrUpdateShopProduct(product: Product, qty: number): boolean;

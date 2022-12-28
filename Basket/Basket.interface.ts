@@ -1,6 +1,6 @@
-import { Product } from '../Product/Product';
+import { Product } from '../Product/Product.class';
 import { ProductWhQty } from '../Product/ProductWhQty';
-import { Basket } from './Basket';
+import { Basket } from './Basket.class';
 
 export interface IBasket {
   basketList: Map<string, ProductWhQty>;

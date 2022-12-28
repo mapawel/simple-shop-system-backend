@@ -1,9 +1,9 @@
-import { Product } from '../../Product/Product';
-import { IshopSystemOffer } from './IshopSystemOffer';
-import { Basket } from '../../Basket/Basket.js';
+import { Product } from '../../Product/Product.class';
+import { IshopSystemOffer } from './ShopSystemOffer.interface';
+import { Basket } from '../../Basket/Basket.class.js';
 import { qtyValidator } from '../../validators/qtyValidator';
 import { ProductWhQty } from '../../Product/ProductWhQty';
-import { BasketWhDate } from '../../Basket/BasketWhDate';
+import { BasketWhDate } from '../../Basket/BasketWhDate.type';
 
 export class ShopSystemOffer implements IshopSystemOffer {
   private readonly productList: Map<string, ProductWhQty> = new Map();

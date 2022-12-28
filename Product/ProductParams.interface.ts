@@ -1,4 +1,4 @@
-import { productCategories } from './productCategoriesEnum';
+import { productCategories } from './productCategories.enum';
 
 export interface IProductParams {
   name: string;

@@ -1,9 +1,9 @@
-import { Product } from './Product/Product.js';
-import { Basket } from './Basket/Basket.js';
-import { productCategories } from './Product/productCategoriesEnum.js';
-import { ShopSystem } from './ShopSystem/ShopSystem.js';
-import { ShopSystemOffer } from './ShopSystem/services/ShopSystemOffer.js';
-import { ShopSystemCoupons } from './ShopSystem/services/ShopSystemCoupons.js';
+import { Product } from './Product/Product.class.js';
+import { Basket } from './Basket/Basket.class.js';
+import { productCategories } from './Product/productCategories.enum.js';
+import { ShopSystem } from './ShopSystem/ShopSystem.class.js';
+import { ShopSystemOffer } from './ShopSystem/services/ShopSystemOffer.class.js';
+import { ShopSystemCoupons } from './ShopSystem/services/ShopSystemCoupons.class.js';
 
 // // CREATE EXAMPLE PRODUCTS INSTANCES
 const p1 = new Product({
@@ -84,7 +84,6 @@ const shop = new ShopSystem(shopSystemOffer, shopSystemCoupons);
 
 console.log('SHOP PRODUCTS AFTER ADDING PRODUCTS----> ', shop.shopProducts);
 
-
 // REMOVE SOME PRODUCTS FROM SHOP OR CHANGE THE QTY
 shop.removeShopProduct(p5);
 shop.removeShopProduct(p1);
@@ -108,7 +107,7 @@ shop.removeShopCoupon('QWE');
 
 console.log('SHOP UNUSED COUPONS AFTER REMOVING----> ', shop.showShopCoupons);
 
-b1.getFinalBasketValue()
+b1.getFinalBasketValue();
 
 // CHECKOUT WITH BASKET EARLIER CREATED
 console.log('shop system checkout response: ', shop.checkout(b1));

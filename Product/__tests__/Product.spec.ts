@@ -1,32 +1,16 @@
 import 'mocha';
 import { assert } from 'chai';
-import { Product } from '../Product';
-import { productCategories } from '../productCategoriesEnum';
-import { IProductParams } from '../IProductParams';
+import { Product } from '../Product.class';
+import { IProductParams } from '../ProductParams.interface';
 import { getDiscontedFormatedPrc } from '../../utils/getDiscontedFormatedPrc';
+import { initialProducts } from './productsMock';
 
-describe('Product:', () => {
-  // arrange
-  const initialProducts: IProductParams[] = [
-    {
-      name: 'Nice Jacket',
-      category: productCategories.JACKET,
-      basePrice: 350.333333333,
-    },
-    {
-      name: 'Nice Trousers',
-      category: productCategories.TROUSERS,
-      basePrice: 250,
-      discount: 0.2,
-    },
-  ];
-
-  const products: Product[] = initialProducts.map(
-    (initialProduct: IProductParams) => new Product(initialProduct)
-  );
-
+describe('Product tests suite:', () => {
   describe('getFinalPrice method:', () => {
     it('method "getFinalPrice" should return a product discounted value', () => {
+      const products: Product[] = initialProducts.map(
+        (initialProduct: IProductParams) => new Product(initialProduct)
+      );
       // act
       // assert
       products.forEach((product: Product, index: number) =>

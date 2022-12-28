@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IBasket } from './IBasket';
-import { Product } from '../Product/Product.js';
+import { IBasket } from './Basket.interface';
+import { Product } from '../Product/Product.class.js';
 import { discountValidator } from '../validators/discountValidator.js';
 import { getDiscontedFormatedPrc } from '../utils/getDiscontedFormatedPrc.js';
 import { getBasketProductsSum } from '../utils/getBasketProductsSum.js';
@@ -37,7 +37,7 @@ export class Basket implements IBasket {
       qty,
     });
 
-    return true
+    return true;
   }
 
   removeProduct(toRmProduct: Product): boolean {
@@ -53,13 +53,13 @@ export class Basket implements IBasket {
     if (cartProductItemFound?.qty === 1)
       this.list.delete(cartProductItemFound.product.uuid);
 
-    return true
+    return true;
   }
 
   removeAllProducts(): boolean {
     this.list.clear();
 
-    return true
+    return true;
   }
 
   getFinalBasketValue(): number {

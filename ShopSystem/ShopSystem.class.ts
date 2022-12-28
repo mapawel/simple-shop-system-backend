@@ -1,12 +1,12 @@
 import { v4 as uuid4 } from 'uuid';
-import { IshopSystemOffer } from './services/IshopSystemOffer';
-import { IshopSystemCoupons } from './services/IshopSystemCoupons';
-import { Basket } from '../Basket/Basket.js';
-import { Product } from '../Product/Product.js';
-import { ShopSystemOffer } from './services/ShopSystemOffer';
-import { ShopSystemCoupons } from './services/ShopSystemCoupons';
+import { IshopSystemOffer } from './services/ShopSystemOffer.interface';
+import { IshopSystemCoupons } from './services/ShopSystemCoupons.interface';
+import { Basket } from '../Basket/Basket.class.js';
+import { Product } from '../Product/Product.class.js';
+import { ShopSystemOffer } from './services/ShopSystemOffer.class';
+import { ShopSystemCoupons } from './services/ShopSystemCoupons.class';
 import { ProductWhQty } from '../Product/ProductWhQty';
-import { BasketWhDate } from '../Basket/BasketWhDate';
+import { BasketWhDate } from '../Basket/BasketWhDate.type';
 
 export class ShopSystem {
   readonly uuid: string;

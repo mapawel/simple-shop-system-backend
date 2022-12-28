@@ -1,4 +1,4 @@
-import { IshopSystemCoupons } from './IshopSystemCoupons';
+import { IshopSystemCoupons } from './ShopSystemCoupons.interface';
 
 export class ShopSystemCoupons implements IshopSystemCoupons {
   private readonly usedCoupons: Set<string> = new Set();
@@ -22,13 +22,13 @@ export class ShopSystemCoupons implements IshopSystemCoupons {
   addShopCoupon(coupon: string): boolean {
     this.validate(coupon);
     this.unusedCoupons.add(coupon);
-    return true
+    return true;
   }
 
   removeShopCoupon(coupon: string): boolean {
     this.validate(coupon);
     this.unusedCoupons.delete(coupon);
-    return true
+    return true;
   }
 
   useShopCoupon(coupon: string): boolean {

@@ -1,4 +1,4 @@
-import { Basket } from "./Basket";
+import { Basket } from './Basket.class';
 
 export type BasketWhDate = {
   basket: Basket;
